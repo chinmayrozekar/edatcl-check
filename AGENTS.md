@@ -1,19 +1,31 @@
 # edatcl-check
 
 ## Elevator Pitch
-A TCL verification toolkit for EDA flows — mock testing, runtime observability, and static analysis. Catches silently broken constraints that today escape to STA and beyond.
+Unit-test your EDA flow procs in 2 seconds on a laptop — no $200k license, no 6-hour elaboration. Catch silently broken constraints in CI before they hit STA.
 
 ## The Problem
 
-Every EDA engineer has lived this:
+Every EDA engineer has lived one of these:
+
+**Zero match.** The pin was renamed by synthesis. `get_pins` returns an empty collection. `set_false_path` applies to nothing. No error, no warning.
 
 ```tcl
 set_false_path -from [get_pins u_core/gen_clk_reg/Q] -to [get_pins u_core/sync_reg/D]
+# gen_clk_reg was renamed to gen_clk_reg_reg — this does nothing, silently
 ```
 
-The pin was renamed by synthesis to `gen_clk_reg_reg/Q`. `get_pins` matches zero objects, returns an empty collection, and `set_false_path` with an empty collection is a silent no-op. The run completes. Timing looks clean. You tape out. Silicon comes back broken.
+**Partial match.** A netlist change drops one of ten wildcard matches. The constraint still applies — just incompletely. `check_timing` won't flag it.
 
-TCL has no built-in safety net for this. EDA tools have no incentive to fix it — it would expose their own silent behavior and break 25 years of backward compatibility.
+```tcl
+set_false_path -from [get_pins *clk*]  ;# matched 11 pins yesterday, 10 today
+```
+
+Both bugs currently require a licensed tool and hours of elaboration to detect. Most aren't caught until STA, and some escape to silicon.
+
+EDA vendors' safety nets (`check_timing`, `check_design`, warning messages) are better than nothing, but:
+- They require a $200k license and hours of netlist elaboration — impossible in CI
+- Warnings in 100k-line logs are routinely suppressed or buried
+- Partial matches are structurally invisible to them
 
 ## What the Industry Currently Has
 
