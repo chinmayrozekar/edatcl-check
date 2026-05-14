@@ -6,16 +6,11 @@ outcome: full design spec in AGENTS.md; 5 ADRs; v0.1 TCL mock framework scaffold
 
 ## Origin
 
-This project emerged from a multi-round LLM conversation exploring novel
-TCL project ideas for the EDA industry. The initial prompt was:
-
-"brain strom a project idea in TCL language"
-
-After exploring several options (interactive fiction engine, network
-traffic dashboard, automation framework, CI pipeline runner), the
-conversation narrowed when the user asked for something that addresses
-real pain points in EDA TCL scripting — "something that people in EDA
-industry like new commers keep complaining about."
+Every EDA engineer has a graveyard of tape-out post-mortems caused by
+constraints that silently did nothing. This project started with a simple
+observation: the TCL scripts we trust to govern multi-million dollar
+silicon have less safety tooling than a weekend JavaScript project. The
+design space exploration that followed is recorded below.
 
 ## Key Inflection Points
 
