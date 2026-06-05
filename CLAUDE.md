@@ -1,7 +1,7 @@
 # Claude Code Working Notes — edatcl-check
 
 ## Project Status
-v0.0.0 — pre-MVP. Working toward v0.1 (mock framework).
+v0.0.0 — pre-MVP. Working toward v0.1 (mock framework). Last session: 2026-06-05.
 
 ## Read First
 - **AGENTS.md** — full design spec, rationale, and Non-Goals. This is the source of truth for *what* and *why*. Read it before suggesting any architectural change.
